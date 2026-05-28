@@ -62,6 +62,9 @@
   --shadow-md: 0 4px 16px  rgba(17, 17, 27, 0.50);
   --shadow-lg: 0 8px 32px  rgba(17, 17, 27, 0.60);
 
+  /* Button text: dark on pastel (dark mode) */
+  --ctp-on-accent: #11111b;
+
   /* Rainbow bar gradient — Mocha accents */
   --rainbow-gradient: linear-gradient(
     to right,
@@ -118,6 +121,9 @@
   --color-cta:       var(--ctp-peach);
   --color-cta-hover: var(--ctp-maroon);
 
+  /* Button text: white on vibrant (light mode) */
+  --ctp-on-accent: #ffffff;
+
   /* Shadow (Latte Crust #dce0e8) */
   --shadow-sm: 0 2px 8px   rgba(108, 111, 133, 0.15);
   --shadow-md: 0 4px 16px  rgba(108, 111, 133, 0.20);
@@ -165,6 +171,7 @@
   --color-ctp-sapphire:  var(--ctp-sapphire);
   --color-ctp-blue:      var(--ctp-blue);
   --color-ctp-lavender:  var(--ctp-lavender);
+  --color-ctp-on-accent: var(--ctp-on-accent);
   --border-radius-sm:    var(--radius-sm);
   --border-radius-md:    var(--radius-md);
   --border-radius-lg:    var(--radius-lg);
