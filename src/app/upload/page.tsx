@@ -42,17 +42,7 @@ export default function UploadPage() {
       <AppHeader />
       <main className="flex flex-col items-center justify-center px-6 py-20 gap-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-2">
-            <span
-              className="bg-clip-text text-transparent"
-              style={{
-                backgroundImage:
-                  'linear-gradient(to right, var(--ctp-sky), var(--ctp-blue), var(--ctp-lavender))',
-              }}
-            >
-              명세서 업로드
-            </span>
-          </h1>
+          <h1 className="text-2xl font-bold text-ctp-text mb-2">명세서 업로드</h1>
           <p className="text-sm text-ctp-subtext-1">
             신한카드 Excel 명세서(.xlsx 또는 .xls)를 업로드하면 자동으로 분석합니다
           </p>

@@ -21,18 +21,9 @@ export default function LandingPage() {
           aria-hidden="true"
         />
         <span className="text-5xl relative">💳</span>
-        <h1 className="relative text-3xl sm:text-4xl font-bold leading-tight max-w-xl">
-          <span
-            className="bg-clip-text text-transparent"
-            style={{
-              backgroundImage:
-                'linear-gradient(to right, var(--ctp-peach), var(--ctp-mauve), var(--ctp-lavender))',
-            }}
-          >
-            카드 명세서 하나로
-          </span>
-          <br />
-          <span className="text-ctp-text">내 소비 패턴을 한눈에</span>
+        <h1 className="relative text-3xl sm:text-4xl font-bold leading-tight max-w-xl text-ctp-text">
+          카드 명세서 하나로<br />
+          <span className="text-ctp-mauve">내 소비 패턴</span>을 한눈에
         </h1>
         <p className="relative text-base text-ctp-subtext-1 max-w-md">
           엑셀 파일만 올리면 카테고리별 지출을 자동으로 분석해드립니다
