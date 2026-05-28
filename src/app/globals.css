@@ -83,18 +83,18 @@
    Catppuccin Latte — Light
 ══════════════════════════════════════════ */
 [data-theme="light"] {
-  /* Base */
-  --ctp-crust:     #dce0e8;
-  --ctp-mantle:    #e6e9ef;
-  --ctp-base:      #eff1f5;
-  --ctp-surface-0: #ccd0da;
-  --ctp-surface-1: #bcc0cc;
-  --ctp-surface-2: #acb0be;
+  /* Base — brighter, airier hierarchy */
+  --ctp-crust:     #e2e5ef;
+  --ctp-mantle:    #edf0f8;
+  --ctp-base:      #f5f7ff;
+  --ctp-surface-0: #ffffff;   /* 카드: 순백 */
+  --ctp-surface-1: #f0f2fb;   /* 호버: 연한 라벤더 화이트 */
+  --ctp-surface-2: #e3e6f5;   /* 활성 탭/구분선 */
 
   /* Overlay */
-  --ctp-overlay-0: #9ca0b0;
-  --ctp-overlay-1: #8c8fa1;
-  --ctp-overlay-2: #7c7f93;
+  --ctp-overlay-0: #acb0c8;
+  --ctp-overlay-1: #9ca0ba;
+  --ctp-overlay-2: #8c90ac;
 
   /* Text */
   --ctp-subtext-0: #6c6f85;
