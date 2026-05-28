@@ -8,9 +8,9 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<Variant, string> = {
   primary:
-    'bg-ctp-mauve text-ctp-crust hover:bg-ctp-pink active:scale-[0.97] disabled:opacity-40',
+    'bg-ctp-peach text-ctp-crust hover:opacity-90 active:scale-[0.97] disabled:opacity-40',
   secondary:
-    'bg-ctp-surface-1 text-ctp-text border border-ctp-surface-2 hover:bg-ctp-surface-2 disabled:opacity-40',
+    'bg-ctp-mauve text-ctp-crust hover:opacity-90 active:scale-[0.97] disabled:opacity-40',
   ghost:
     'bg-transparent text-ctp-text border border-ctp-overlay-0 hover:bg-ctp-surface-0 disabled:opacity-40',
 };

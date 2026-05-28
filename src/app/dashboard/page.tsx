@@ -66,7 +66,17 @@ export default function DashboardPage() {
       <main className="max-w-2xl mx-auto px-6 py-8 flex flex-col gap-6">
         {/* 헤더 행 */}
         <div className="flex items-center justify-between gap-3">
-          <h1 className="text-xl font-bold text-ctp-text">소비 분석</h1>
+          <h1 className="text-xl font-bold">
+            <span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage:
+                  'linear-gradient(to right, var(--ctp-green), var(--ctp-teal), var(--ctp-sky))',
+              }}
+            >
+              소비 분석
+            </span>
+          </h1>
           <div className="flex items-center gap-2">
             <Button
               variant="secondary"

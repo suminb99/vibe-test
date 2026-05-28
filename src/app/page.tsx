@@ -9,13 +9,32 @@ export default function LandingPage() {
   return (
     <main className="min-h-screen bg-ctp-base">
       {/* Hero */}
-      <section className="flex flex-col items-center justify-center text-center px-6 pt-24 pb-16 gap-6">
-        <span className="text-5xl">💳</span>
-        <h1 className="text-3xl sm:text-4xl font-bold text-ctp-text leading-tight max-w-xl">
-          카드 명세서 하나로<br />
-          <span className="text-ctp-mauve">내 소비 패턴</span>을 한눈에
+      <section className="relative flex flex-col items-center justify-center text-center px-6 pt-24 pb-16 gap-6 overflow-hidden">
+        {/* 배경 그라데이션 워시 */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.12]"
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 60% at 50% 0%, var(--ctp-mauve), transparent 70%),' +
+              'radial-gradient(ellipse 50% 40% at 80% 80%, var(--ctp-blue), transparent 60%)',
+          }}
+          aria-hidden="true"
+        />
+        <span className="text-5xl relative">💳</span>
+        <h1 className="relative text-3xl sm:text-4xl font-bold leading-tight max-w-xl">
+          <span
+            className="bg-clip-text text-transparent"
+            style={{
+              backgroundImage:
+                'linear-gradient(to right, var(--ctp-peach), var(--ctp-mauve), var(--ctp-lavender))',
+            }}
+          >
+            카드 명세서 하나로
+          </span>
+          <br />
+          <span className="text-ctp-text">내 소비 패턴을 한눈에</span>
         </h1>
-        <p className="text-base text-ctp-subtext-1 max-w-md">
+        <p className="relative text-base text-ctp-subtext-1 max-w-md">
           엑셀 파일만 올리면 카테고리별 지출을 자동으로 분석해드립니다
         </p>
         <Button

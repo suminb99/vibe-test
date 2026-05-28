@@ -1,42 +1,45 @@
 @import "tailwindcss";
 
-/* ── Catppuccin Macchiato ── */
-:root {
+/* ══════════════════════════════════════════
+   Catppuccin Mocha — Dark (default)
+══════════════════════════════════════════ */
+:root,
+[data-theme="dark"] {
   /* Base */
-  --ctp-crust:     #181926;
-  --ctp-mantle:    #1e2030;
-  --ctp-base:      #24273a;
-  --ctp-surface-0: #363a4f;
-  --ctp-surface-1: #494d64;
-  --ctp-surface-2: #5b6078;
+  --ctp-crust:     #11111b;
+  --ctp-mantle:    #181825;
+  --ctp-base:      #1e1e2e;
+  --ctp-surface-0: #313244;
+  --ctp-surface-1: #45475a;
+  --ctp-surface-2: #585b70;
 
   /* Overlay */
-  --ctp-overlay-0: #6e738d;
-  --ctp-overlay-1: #8087a2;
-  --ctp-overlay-2: #939ab7;
+  --ctp-overlay-0: #6c7086;
+  --ctp-overlay-1: #7f849c;
+  --ctp-overlay-2: #9399b2;
 
   /* Text */
-  --ctp-subtext-0: #a5adcb;
-  --ctp-subtext-1: #b8c0e0;
-  --ctp-text:      #cad3f5;
+  --ctp-subtext-0: #a6adc8;
+  --ctp-subtext-1: #bac2de;
+  --ctp-text:      #cdd6f4;
 
   /* Accent */
-  --ctp-rosewater: #f4dbd6;
-  --ctp-flamingo:  #f0c6c6;
-  --ctp-pink:      #f5bde6;
-  --ctp-mauve:     #c6a0f6;
-  --ctp-red:       #ed8796;
-  --ctp-maroon:    #ee99a0;
-  --ctp-peach:     #f5a97f;
-  --ctp-yellow:    #eed49f;
-  --ctp-green:     #a6da95;
-  --ctp-teal:      #8bd5ca;
-  --ctp-sky:       #91d7e3;
-  --ctp-sapphire:  #7dc4e4;
-  --ctp-blue:      #8aadf4;
-  --ctp-lavender:  #b7bdf8;
+  --ctp-rosewater: #f5e0dc;
+  --ctp-flamingo:  #f2cdcd;
+  --ctp-pink:      #f5c2e7;
+  --ctp-mauve:     #cba6f7;
+  --ctp-red:       #f38ba8;
+  --ctp-maroon:    #eba0ac;
+  --ctp-peach:     #fab387;
+  --ctp-yellow:    #f9e2af;
+  --ctp-green:     #a6e3a1;
+  --ctp-teal:      #94e2d5;
+  --ctp-sky:       #89dceb;
+  --ctp-sapphire:  #74c7ec;
+  --ctp-blue:      #89b4fa;
+  --ctp-lavender:  #b4befe;
 
-  /* Semantic tokens */
+  /* Semantic */
   --color-bg:             var(--ctp-base);
   --color-bg-alt:         var(--ctp-mantle);
   --color-bg-raised:      var(--ctp-surface-0);
@@ -47,29 +50,91 @@
   --color-text-secondary: var(--ctp-subtext-1);
   --color-text-muted:     var(--ctp-subtext-0);
   --color-text-disabled:  var(--ctp-overlay-1);
-  --color-cta:            var(--ctp-mauve);
-  --color-cta-hover:      var(--ctp-pink);
+  --color-cta:            var(--ctp-peach);
+  --color-cta-hover:      var(--ctp-yellow);
   --color-focus:          var(--ctp-lavender);
   --color-success:        var(--ctp-green);
   --color-warning:        var(--ctp-yellow);
   --color-error:          var(--ctp-red);
 
-  /* Radius */
-  --radius-sm:   4px;
-  --radius-md:   8px;
-  --radius-lg:   12px;
-  --radius-xl:   16px;
-  --radius-full: 9999px;
+  /* Shadow (Mocha Crust #11111b) */
+  --shadow-sm: 0 2px 8px   rgba(17, 17, 27, 0.40);
+  --shadow-md: 0 4px 16px  rgba(17, 17, 27, 0.50);
+  --shadow-lg: 0 8px 32px  rgba(17, 17, 27, 0.60);
 
-  /* Shadow */
-  --shadow-sm: 0 2px 8px   rgba(24, 25, 38, 0.40);
-  --shadow-md: 0 4px 16px  rgba(24, 25, 38, 0.50);
-  --shadow-lg: 0 8px 32px  rgba(24, 25, 38, 0.60);
+  /* Rainbow bar gradient — Mocha accents */
+  --rainbow-gradient: linear-gradient(
+    to right,
+    #f38ba8,
+    #fab387,
+    #f9e2af,
+    #a6e3a1,
+    #94e2d5,
+    #89b4fa,
+    #cba6f7,
+    #f5c2e7
+  );
+}
 
-  /* Motion */
-  --duration-fast:   100ms;
-  --duration-normal: 200ms;
-  --ease-out: cubic-bezier(0.0, 0, 0.2, 1);
+/* ══════════════════════════════════════════
+   Catppuccin Latte — Light
+══════════════════════════════════════════ */
+[data-theme="light"] {
+  /* Base */
+  --ctp-crust:     #dce0e8;
+  --ctp-mantle:    #e6e9ef;
+  --ctp-base:      #eff1f5;
+  --ctp-surface-0: #ccd0da;
+  --ctp-surface-1: #bcc0cc;
+  --ctp-surface-2: #acb0be;
+
+  /* Overlay */
+  --ctp-overlay-0: #9ca0b0;
+  --ctp-overlay-1: #8c8fa1;
+  --ctp-overlay-2: #7c7f93;
+
+  /* Text */
+  --ctp-subtext-0: #6c6f85;
+  --ctp-subtext-1: #5c5f77;
+  --ctp-text:      #4c4f69;
+
+  /* Accent — Latte */
+  --ctp-rosewater: #dc8a78;
+  --ctp-flamingo:  #dd7878;
+  --ctp-pink:      #ea76cb;
+  --ctp-mauve:     #8839ef;
+  --ctp-red:       #d20f39;
+  --ctp-maroon:    #e64553;
+  --ctp-peach:     #fe640b;
+  --ctp-yellow:    #df8e1d;
+  --ctp-green:     #40a02b;
+  --ctp-teal:      #179299;
+  --ctp-sky:       #04a5e5;
+  --ctp-sapphire:  #209fb5;
+  --ctp-blue:      #1e66f5;
+  --ctp-lavender:  #7287fd;
+
+  /* Semantic overrides */
+  --color-cta:       var(--ctp-peach);
+  --color-cta-hover: var(--ctp-maroon);
+
+  /* Shadow (Latte Crust #dce0e8) */
+  --shadow-sm: 0 2px 8px   rgba(108, 111, 133, 0.15);
+  --shadow-md: 0 4px 16px  rgba(108, 111, 133, 0.20);
+  --shadow-lg: 0 8px 32px  rgba(108, 111, 133, 0.25);
+
+  /* Rainbow bar gradient — Latte accents */
+  --rainbow-gradient: linear-gradient(
+    to right,
+    #d20f39,
+    #fe640b,
+    #df8e1d,
+    #40a02b,
+    #179299,
+    #1e66f5,
+    #8839ef,
+    #ea76cb
+  );
 }
 
 /* ── Tailwind v4 theme extension ── */
@@ -86,21 +151,36 @@
   --color-ctp-text:      var(--ctp-text);
   --color-ctp-subtext-1: var(--ctp-subtext-1);
   --color-ctp-subtext-0: var(--ctp-subtext-0);
-  --color-ctp-mauve:     var(--ctp-mauve);
+  --color-ctp-rosewater: var(--ctp-rosewater);
+  --color-ctp-flamingo:  var(--ctp-flamingo);
   --color-ctp-pink:      var(--ctp-pink);
+  --color-ctp-mauve:     var(--ctp-mauve);
   --color-ctp-red:       var(--ctp-red);
-  --color-ctp-green:     var(--ctp-green);
-  --color-ctp-blue:      var(--ctp-blue);
-  --color-ctp-teal:      var(--ctp-teal);
+  --color-ctp-maroon:    var(--ctp-maroon);
   --color-ctp-peach:     var(--ctp-peach);
   --color-ctp-yellow:    var(--ctp-yellow);
-  --color-ctp-lavender:  var(--ctp-lavender);
+  --color-ctp-green:     var(--ctp-green);
+  --color-ctp-teal:      var(--ctp-teal);
   --color-ctp-sky:       var(--ctp-sky);
-  --color-ctp-flamingo:  var(--ctp-flamingo);
+  --color-ctp-sapphire:  var(--ctp-sapphire);
+  --color-ctp-blue:      var(--ctp-blue);
+  --color-ctp-lavender:  var(--ctp-lavender);
   --border-radius-sm:    var(--radius-sm);
   --border-radius-md:    var(--radius-md);
   --border-radius-lg:    var(--radius-lg);
   --border-radius-xl:    var(--radius-xl);
+}
+
+/* ── Global base styles ── */
+:root {
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
+  --duration-fast:   100ms;
+  --duration-normal: 200ms;
+  --ease-out: cubic-bezier(0.0, 0, 0.2, 1);
 }
 
 body {
@@ -109,7 +189,7 @@ body {
   font-family: 'DM Sans', 'Inter', sans-serif;
 }
 
-/* Reduced motion */
+/* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
