@@ -14,7 +14,11 @@ async function fetchCategories(merchants: string[]): Promise<Map<string, Categor
     body: JSON.stringify({ merchants }),
   });
 
-  if (!res.ok) throw new Error('카테고리 분류 API 호출에 실패했습니다.');
+  if (!res.ok) {
+    const errData = await res.json().catch(() => ({}));
+    const msg = (errData as { error?: string }).error ?? '카테고리 분류 API 호출에 실패했습니다.';
+    throw new Error(msg);
+  }
 
   const data = (await res.json()) as {
     result: { merchant: string; category: Category }[];

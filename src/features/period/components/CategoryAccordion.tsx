@@ -8,16 +8,28 @@ import { formatAmount } from '@/lib/utils/formatter';
 interface CategoryAccordionProps {
   summaries: CategorySummary[];
   transactions: Transaction[];
+  selectedIds?: Set<string>;
+  onToggleSelect?: (id: string) => void;
 }
 
 export default function CategoryAccordion({
   summaries,
   transactions,
+  selectedIds = new Set(),
+  onToggleSelect,
 }: CategoryAccordionProps) {
-  const [expanded, setExpanded] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
   const toggle = (category: string) => {
-    setExpanded((prev) => (prev === category ? null : category));
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(category)) {
+        next.delete(category);
+      } else {
+        next.add(category);
+      }
+      return next;
+    });
   };
 
   if (summaries.length === 0) {
@@ -31,7 +43,7 @@ export default function CategoryAccordion({
   return (
     <div className="flex flex-col gap-2">
       {summaries.map((summary) => {
-        const isOpen = expanded === summary.category;
+        const isOpen = expanded.has(summary.category);
         const categoryTxs = transactions
           .filter((tx) => tx.category === summary.category && !tx.isCancel)
           .sort((a, b) => b.date.localeCompare(a.date));
@@ -76,22 +88,53 @@ export default function CategoryAccordion({
                 {categoryTxs.length === 0 ? (
                   <p className="text-xs text-ctp-subtext-1 text-center py-4">내역 없음</p>
                 ) : (
-                  categoryTxs.map((tx, i) => (
-                    <div
-                      key={`${tx.date}-${tx.merchant}-${i}`}
-                      className="flex items-center justify-between px-4 py-3 border-b border-ctp-surface-0 last:border-b-0"
-                    >
-                      <div className="flex flex-col gap-0.5 min-w-0">
-                        <span className="text-sm text-ctp-text truncate">{tx.merchant}</span>
-                        <span className="text-xs text-ctp-subtext-1">
-                          {tx.date.slice(5).replace('-', '.')}
-                        </span>
-                      </div>
-                      <span className="text-sm font-medium text-ctp-text whitespace-nowrap ml-4">
-                        {formatAmount(tx.amount)}
-                      </span>
-                    </div>
-                  ))
+                  categoryTxs.map((tx) => {
+                    const isSelected = selectedIds.has(tx.id);
+                    return (
+                      <button
+                        key={tx.id}
+                        onClick={() => onToggleSelect?.(tx.id)}
+                        className={[
+                          'w-full flex items-center justify-between px-4 py-3',
+                          'border-b border-ctp-surface-0 last:border-b-0',
+                          'text-left transition-colors duration-100',
+                          onToggleSelect ? 'cursor-pointer' : 'cursor-default',
+                          isSelected
+                            ? 'bg-[rgba(198,160,246,0.15)]'
+                            : 'hover:bg-ctp-surface-0',
+                        ].join(' ')}
+                        aria-pressed={isSelected}
+                        aria-label={`${tx.merchant} ${formatAmount(tx.amount)} ${isSelected ? '선택 해제' : '선택'}`}
+                      >
+                        <div className="flex flex-col gap-0.5 min-w-0">
+                          <span
+                            className={[
+                              'text-sm truncate',
+                              isSelected ? 'text-ctp-mauve font-medium' : 'text-ctp-text',
+                            ].join(' ')}
+                          >
+                            {tx.merchant}
+                          </span>
+                          <span className="text-xs text-ctp-subtext-1">
+                            {tx.date.slice(5).replace('-', '.')}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 ml-4 shrink-0">
+                          {isSelected && (
+                            <span className="text-ctp-mauve text-xs">✓</span>
+                          )}
+                          <span
+                            className={[
+                              'text-sm font-medium whitespace-nowrap',
+                              isSelected ? 'text-ctp-mauve' : 'text-ctp-text',
+                            ].join(' ')}
+                          >
+                            {formatAmount(tx.amount)}
+                          </span>
+                        </div>
+                      </button>
+                    );
+                  })
                 )}
               </div>
             )}

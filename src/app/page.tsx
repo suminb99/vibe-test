@@ -24,6 +24,13 @@ export default function LandingPage() {
         >
           명세서 업로드하고 분석 시작하기
         </Button>
+        <Button
+          variant="secondary"
+          onClick={() => router.push('/dashboard')}
+          className="h-10 px-6"
+        >
+          대시보드 바로 가기
+        </Button>
       </section>
 
       {/* Problem */}

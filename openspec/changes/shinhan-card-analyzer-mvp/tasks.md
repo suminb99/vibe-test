@@ -75,3 +75,31 @@
 - [ ] 10.3 취소 거래 포함 명세서로 집계 제외 및 색상 구분 검증
 - [ ] 10.4 해외 거래(ALP*/Alipay*) 포함 명세서로 분류 결과 검증
 - [x] 10.5 `pnpm build` 에러 없음 확인
+
+## 11. .xls 지원 확장
+
+- [x] 11.1 `src/features/upload/components/FileUploader.tsx`: `accept=".xlsx"` → `accept=".xlsx,.xls"`, 유효성 검사 조건에 `.xls` 추가
+- [x] 11.2 `src/lib/parser/excelParser.ts`: `.xls` 확장자 허용, XLSX.read 호출은 동일하게 유지 (SheetJS가 두 형식 모두 지원)
+- [x] 11.3 에러 메시지 문구 업데이트: `.xlsx 파일만 지원` → `.xlsx 또는 .xls 파일만 지원`
+
+## 12. 페이지 간 네비게이션 버튼
+
+- [x] 12.1 `src/app/page.tsx`: "대시보드 바로 가기" secondary 버튼 추가 → `/dashboard` 이동 (FR-014)
+- [x] 12.2 `src/app/dashboard/page.tsx`: "새 명세서 업로드" 버튼 추가 → `/upload` 이동, 헤더 우측 또는 EmptyState 외 항상 표시 (FR-015)
+- [x] 12.3 `src/app/upload/page.tsx`: "대시보드로 이동" secondary 버튼 추가 → `/dashboard` 이동 (FR-016)
+
+## 13. 결제 건 선택 및 합산 (transaction-selection)
+
+- [x] 13.1 `src/features/period/components/CategoryAccordion.tsx`: `expanded` 상태를 `string | null` → `Set<string>`으로 변경하여 다중 열기 지원
+- [x] 13.2 `src/types/index.ts`: `Transaction`에 `id: string` 필드 추가 (파서에서 할당, 선택 key로 사용)
+- [x] 13.3 `src/lib/parser/excelParser.ts`: 각 Transaction 생성 시 `id` 할당 (`${date}-${merchant}-${index}` 패턴)
+- [x] 13.4 `src/app/dashboard/[period]/page.tsx`: `selectedIds: Set<string>` 상태 추가, `handleToggleSelect` / `handleResetSelection` 핸들러 구현, `selectedTransactions`(selectedIds로 필터링한 Transaction[]) · `selectedTotal`(금액 합산) 파생값 계산, 카테고리 탭 레이아웃을 `lg:grid-cols-[1fr_280px]` 2열로 변경 (`max-w-4xl`)
+- [x] 13.5 `src/features/period/components/CategoryAccordion.tsx`: `selectedIds`, `onToggleSelect` props 추가, 결제 건 행에 클릭 핸들러·선택 하이라이트(`--ctp-mauve` tint) 적용
+- [x] 13.6 `src/features/period/components/SelectionPanel.tsx` 생성: 데스크톱용 우측 고정 패널 — 선택 건수·항목 리스트·합산 금액·초기화 버튼 (FR-018, FR-019)
+- [x] 13.7 `src/features/period/components/StickySelectionBar.tsx` 생성: 모바일용 하단 sticky 바 — "N건 선택 · 합계 X,XXX원 | 초기화", 선택 0건일 때 hidden (FR-018, FR-019)
+
+## 14. 카테고리 분류 버그 수정 (classify-fix)
+
+- [x] 14.1 `src/app/api/classify/route.ts`: Claude 응답에서 마크다운 코드 펜스(` ```json ... ``` `) 제거 후 JSON 파싱 — 현재 펜스가 포함되면 `JSON.parse` 실패 → 전체 '기타' 폴백되는 버그 수정
+- [x] 14.2 `src/app/api/classify/route.ts`: Claude 응답의 `category` 값이 유효한 11개 카테고리 목록에 없으면 해당 항목만 `'기타'`로 대체 (유효하지 않은 값 필터링)
+- [x] 14.3 `src/lib/parser/excelParser.ts` `mergeCategories`: `categoryMap`을 정규화 키(`.trim().toLowerCase()`) 기반으로 조회하도록 변경 — Claude가 merchant 이름 대소문자·공백을 원본과 다르게 반환해도 매핑 성공 보장

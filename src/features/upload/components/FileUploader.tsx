@@ -13,22 +13,25 @@ interface FileUploaderProps {
 export default function FileUploader({ onFile, isLoading, error }: FileUploaderProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const validate = (file: File): string | null => {
-    if (!file.name.endsWith('.xlsx')) {
-      return '.xlsx 파일만 업로드할 수 있습니다. 신한카드 앱에서 Excel 형식으로 다운로드해 주세요.';
+    if (!file.name.endsWith('.xlsx') && !file.name.endsWith('.xls')) {
+      return '.xlsx 또는 .xls 파일만 업로드할 수 있습니다. 신한카드 앱에서 Excel 형식으로 다운로드해 주세요.';
     }
     return null;
   };
 
-  const handleFile = useCallback(
-    (file: File) => {
-      const err = validate(file);
-      if (err) return;
-      setSelectedFile(file);
-    },
-    []
-  );
+  const handleFile = useCallback((file: File) => {
+    const err = validate(file);
+    if (err) {
+      setValidationError(err);
+      setSelectedFile(null);
+      return;
+    }
+    setValidationError(null);
+    setSelectedFile(file);
+  }, []);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -44,6 +47,8 @@ export default function FileUploader({ onFile, isLoading, error }: FileUploaderP
     const file = e.target.files?.[0];
     if (file) handleFile(file);
   };
+
+  const displayError = validationError ?? error;
 
   return (
     <div className="flex flex-col gap-4 w-full max-w-md">
@@ -74,12 +79,12 @@ export default function FileUploader({ onFile, isLoading, error }: FileUploaderP
             <p className="text-sm font-medium text-ctp-text">
               파일을 드래그하거나 클릭해서 선택
             </p>
-            <p className="text-xs text-ctp-subtext-1">.xlsx 파일만 지원합니다</p>
+            <p className="text-xs text-ctp-subtext-1">.xlsx 또는 .xls 파일을 지원합니다</p>
           </>
         )}
         <input
           type="file"
-          accept=".xlsx"
+          accept=".xlsx,.xls"
           className="hidden"
           onChange={handleChange}
           disabled={isLoading}
@@ -88,7 +93,7 @@ export default function FileUploader({ onFile, isLoading, error }: FileUploaderP
       </label>
 
       {/* Error */}
-      {error && <ErrorMessage message={error} />}
+      {displayError && <ErrorMessage message={displayError} />}
 
       {/* Upload button */}
       <Button

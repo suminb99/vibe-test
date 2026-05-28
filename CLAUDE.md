@@ -22,7 +22,7 @@ npx playwright test --grep "upload"  # Run a single test by name
 
 **Data flow:**
 1. `/upload` — `excelParser.ts` (SheetJS) parses the `.xlsx` file client-side, extracts `{ date, merchant, amount }` rows, deduplicates merchants, then calls `/api/classify`
-2. `/api/classify` — Next.js API Route; sends deduplicated merchant names to Claude API (`claude-sonnet-4-20250514`), returns `{ merchant, category }[]`
+2. `/api/classify` — Next.js API Route; sends deduplicated merchant names to Claude API (`claude-sonnet-4-6`), returns `{ merchant, category }[]`
 3. Classified `Transaction[]` is written to `sessionStorage` as `ParsedStatement`; the user is redirected to `/dashboard`
 4. `/dashboard` reads `sessionStorage`, filters by the selected period, aggregates into `CategorySummary[]` via `filterUtils.ts`
 5. `/dashboard/category/[id]` re-reads `sessionStorage`, filters to one category, builds `MerchantSummary[]` and the full `Transaction[]` for that category
@@ -61,7 +61,7 @@ type ParsedStatement = { uploadedAt: string; transactions: Transaction[] };
 
 - Request: `{ merchants: string[] }` (deduplicated before calling to save tokens)
 - Response: `{ result: { merchant: string; category: Category }[] }`
-- Model: `claude-sonnet-4-20250514`; prompt asks for JSON-only response
+- Model: `claude-sonnet-4-6`; prompt asks for JSON-only response
 - Ambiguous merchants → `"기타"`
 
 Environment variable (`.env.local`, never commit):

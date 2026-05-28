@@ -44,10 +44,16 @@ export default function UploadPage() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-ctp-text mb-2">명세서 업로드</h1>
           <p className="text-sm text-ctp-subtext-1">
-            신한카드 Excel 명세서(.xlsx)를 업로드하면 자동으로 분석합니다
+            신한카드 Excel 명세서(.xlsx 또는 .xls)를 업로드하면 자동으로 분석합니다
           </p>
         </div>
         <FileUploader onFile={handleFile} isLoading={isLoading} error={error} />
+        <button
+          onClick={() => router.push('/dashboard')}
+          className="text-sm text-ctp-subtext-1 hover:text-ctp-mauve transition-colors duration-150 underline underline-offset-2"
+        >
+          대시보드로 이동
+        </button>
       </main>
     </div>
   );

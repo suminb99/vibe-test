@@ -12,6 +12,7 @@ export type Category =
   | '기타';
 
 export type Transaction = {
+  id: string;         // "${date}-${merchant}-${index}" — 선택 기능의 고유 key
   date: string;       // "YYYY-MM-DD"
   merchant: string;
   amount: number;     // KRW, 취소 거래는 음수

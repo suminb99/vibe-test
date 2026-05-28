@@ -14,8 +14,8 @@
 최종 산출물:
 - Landing Page
 - Upload Page
-- Dashboard Page
-- Category Detail Page
+- Dashboard Page (월간/연간 기간 카드 목록)
+- Period Detail Page (전체 내역 탭 + 카테고리별 지출 탭 — 카테고리 상세는 인라인 accordion으로 표시, 별도 라우트 없음)
 - 핵심 기능 (명세서 파싱, 카테고리 자동 분류, 시각화)
 - GitHub 저장소
 - 테스트 또는 수동 QA 결과

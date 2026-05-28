@@ -15,6 +15,12 @@ function parseDate(raw: string): string {
   return datePart.replace(/\./g, '-');
 }
 
+/** YYYY-MM-DD 형식인지 검증 (합계 행 등 비거래 행 제거용) */
+const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+function isValidDate(date: string): boolean {
+  return DATE_PATTERN.test(date);
+}
+
 /** 취소 거래 감지 */
 function detectCancel(row: Record<string, unknown>, amount: number): boolean {
   if (amount < 0) return true;
@@ -24,6 +30,12 @@ function detectCancel(row: Record<string, unknown>, amount: number): boolean {
 }
 
 export function parseExcel(file: File): Promise<Omit<Transaction, 'category'>[]> {
+  if (!file.name.endsWith('.xlsx') && !file.name.endsWith('.xls')) {
+    return Promise.reject(
+      new Error('.xlsx 또는 .xls 파일만 지원합니다.')
+    );
+  }
+
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -49,17 +61,20 @@ export function parseExcel(file: File): Promise<Omit<Transaction, 'category'>[]>
 
         const transactions: Omit<Transaction, 'category'>[] = rows
           .filter((row) => row['매입구분'] !== undefined) // 헤더 반복 행 제거
-          .map((row) => {
+          .map((row, index) => {
+            const date = parseDate(row['거래일'] as string);
+            const merchant = String(row['가맹점명'] ?? '').trim();
             const amount = parseAmount(row['금액'] as string | number);
             const isCancel = detectCancel(row, amount);
             return {
-              date: parseDate(row['거래일'] as string),
-              merchant: String(row['가맹점명'] ?? '').trim(),
+              id: `${date}-${merchant}-${index}`,
+              date,
+              merchant,
               amount,
               isCancel,
             };
           })
-          .filter((tx) => tx.merchant.length > 0);
+          .filter((tx) => tx.merchant.length > 0 && isValidDate(tx.date));
 
         resolve(transactions);
       } catch (err) {
@@ -76,8 +91,17 @@ export function mergeCategories(
   transactions: Omit<Transaction, 'category'>[],
   categoryMap: Map<string, Category>
 ): Transaction[] {
+  // 정규화 키(trim + lowercase) 기반 조회용 보조 맵
+  const normalizedMap = new Map<string, Category>();
+  for (const [key, val] of categoryMap) {
+    normalizedMap.set(key.trim().toLowerCase(), val);
+  }
+
   return transactions.map((tx) => ({
     ...tx,
-    category: categoryMap.get(tx.merchant) ?? '기타',
+    category:
+      categoryMap.get(tx.merchant) ??
+      normalizedMap.get(tx.merchant.trim().toLowerCase()) ??
+      '기타',
   }));
 }

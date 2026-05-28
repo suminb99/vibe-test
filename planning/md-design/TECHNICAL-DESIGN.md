@@ -100,7 +100,7 @@ src/
 
 ```
 [Upload Page]
-  사용자가 .xlsx 파일 업로드
+  사용자가 .xlsx 또는 .xls 파일 업로드
   → excelParser.ts: SheetJS로 거래 내역 파싱
     (거래일→date, 가맹점명→merchant, 금액→amount, isCancel 감지)
   → claudeClassifier.ts: 중복 제거 후 가맹점명 배열을 Claude API에 전달

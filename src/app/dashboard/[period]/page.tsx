@@ -7,6 +7,8 @@ import EmptyState from '@/components/ui/EmptyState';
 import DonutChart from '@/features/dashboard/components/DonutChart';
 import TransactionList from '@/features/period/components/TransactionList';
 import CategoryAccordion from '@/features/period/components/CategoryAccordion';
+import SelectionPanel from '@/features/period/components/SelectionPanel';
+import StickySelectionBar from '@/features/period/components/StickySelectionBar';
 import { loadStatement } from '@/lib/storage';
 import {
   filterByPeriod,
@@ -29,6 +31,21 @@ export default function PeriodDetailPage({ params }: PeriodDetailPageProps) {
   const [statement, setStatement] = useState<ParsedStatement | null>(null);
   const [tab, setTab] = useState<Tab>('transactions');
   const [mounted, setMounted] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+
+  const handleToggleSelect = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
+  const handleResetSelection = () => setSelectedIds(new Set());
 
   useEffect(() => {
     setStatement(loadStatement());
@@ -65,10 +82,14 @@ export default function PeriodDetailPage({ params }: PeriodDetailPageProps) {
   const validCount = transactions.filter((tx) => !tx.isCancel).length;
   const periodLabel = formatPeriodLabel(period);
 
+  // 선택 파생값 계산
+  const selectedTransactions = transactions.filter((tx) => selectedIds.has(tx.id));
+  const selectedTotal = selectedTransactions.reduce((sum, tx) => sum + tx.amount, 0);
+
   return (
     <div className="min-h-screen bg-ctp-base">
       <AppHeader />
-      <main className="max-w-2xl mx-auto px-6 py-8 flex flex-col gap-6">
+      <main className="max-w-4xl mx-auto px-6 py-8 flex flex-col gap-6">
 
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-sm" aria-label="breadcrumb">
@@ -118,9 +139,28 @@ export default function PeriodDetailPage({ params }: PeriodDetailPageProps) {
         {tab === 'transactions' ? (
           <TransactionList transactions={transactions} />
         ) : (
-          <CategoryAccordion summaries={summaries} transactions={transactions} />
+          <div className="lg:grid lg:grid-cols-[1fr_280px] lg:gap-4 lg:items-start pb-16 lg:pb-0">
+            <CategoryAccordion
+              summaries={summaries}
+              transactions={transactions}
+              selectedIds={selectedIds}
+              onToggleSelect={handleToggleSelect}
+            />
+            <SelectionPanel
+              selectedTransactions={selectedTransactions}
+              selectedTotal={selectedTotal}
+              onReset={handleResetSelection}
+            />
+          </div>
         )}
       </main>
+
+      {/* 모바일 하단 sticky 선택 바 */}
+      <StickySelectionBar
+        selectedTransactions={selectedTransactions}
+        selectedTotal={selectedTotal}
+        onReset={handleResetSelection}
+      />
     </div>
   );
 }

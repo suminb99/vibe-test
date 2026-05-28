@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import AppHeader from '@/components/layout/AppHeader';
+import Button from '@/components/ui/Button';
 import EmptyState from '@/components/ui/EmptyState';
 import PeriodToggle from '@/features/dashboard/components/PeriodToggle';
 import PeriodCard from '@/features/dashboard/components/PeriodCard';
@@ -64,9 +65,18 @@ export default function DashboardPage() {
       <AppHeader />
       <main className="max-w-2xl mx-auto px-6 py-8 flex flex-col gap-6">
         {/* 헤더 행 */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-3">
           <h1 className="text-xl font-bold text-ctp-text">소비 분석</h1>
-          <PeriodToggle mode={mode} onChange={setMode} />
+          <div className="flex items-center gap-2">
+            <Button
+              variant="secondary"
+              onClick={() => router.push('/upload')}
+              className="h-9 px-4 text-xs"
+            >
+              새 명세서 업로드
+            </Button>
+            <PeriodToggle mode={mode} onChange={setMode} />
+          </div>
         </div>
 
         {/* 기간 카드 목록 */}

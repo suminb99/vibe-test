@@ -20,6 +20,7 @@
 - `merchant-classification`: 중복 제거된 가맹점 배열을 `/api/classify`로 전달해 Claude API가 카테고리 반환, ALP*/Alipay* 접두어 처리 힌트 포함
 - `spending-dashboard`: 월간/연간 토글, 기간별 카드 목록(총액 + 최다 카테고리), Session Storage에서 데이터 로드
 - `period-detail`: 기간 카드 클릭 시 전체 결제 내역(시간순)과 카테고리별 지출(인라인 accordion) 탭 제공
+- `transaction-selection`: 카테고리 accordion 내 결제 건 다중 선택 + 실시간 합산 표시. 여러 카테고리 동시 열기. 데스크톱 우측 패널 / 모바일 sticky 하단 바. 초기화 버튼
 
 ### Modified Capabilities
 
