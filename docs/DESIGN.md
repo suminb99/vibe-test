@@ -1,116 +1,169 @@
 # DESIGN.md
 
-> **Theme: Catppuccin Macchiato**
-> Medium contrast with gentle colors creating a soothing atmosphere.
+> **Theme: Catppuccin Mocha (dark) · Catppuccin Latte (light)**
+> Two-mode design system. Mocha is the default dark canvas; Latte is the paired light counterpart.
 > — [catppuccin.com](https://catppuccin.com)
 
 ---
 
 ## Overview
 
-This document is the design system reference for **Catppuccin Macchiato** — one of four Catppuccin flavors, sitting between Frappé (softer) and Mocha (darker) on the contrast scale.
+This document is the design system reference for a **dual-theme Catppuccin** setup.
 
-Macchiato's design philosophy is **"pastel with purpose."** The deep navy base (`--ctp-base` #24273a) never feels harsh; it reads as a considered dark canvas rather than a black void. Pastel accents — Mauve, Blue, Green, Peach — appear at small scale to guide attention without demanding it. The palette's energy comes from restraint: most of the UI surface stays in the Base/Surface tier, and accent colors earn their place by appearing only where they're needed.
+- **Dark mode — Catppuccin Mocha:** The darkest of the four Catppuccin flavors. A near-black base (`--ctp-base` #1e1e2e) with rich, vivid pastels that pop off the deep canvas. Mocha reads as premium and immersive — high contrast without harshness.
+- **Light mode — Catppuccin Latte:** The canonical light counterpart. A bright cream base (`--ctp-base` #eff1f5) with the same accent hues tuned for legibility on light surfaces.
 
 **Key Characteristics:**
 
-- Deep navy canvas (`--ctp-base` — `#24273a`) with layered surfaces that step up in lightness, not in hue. The system reads as monochromatic at a glance.
-- Mauve (`#c6a0f6`) is the primary brand accent and the only color used for primary CTAs. All other accent colors serve semantic roles (status, syntax, tags) — never decorative fills.
-- Border radius uses a soft scale (`--radius-md` 8px default). No fully-sharp rectangles; no fully-rounded pills on primary surfaces. The system feels "crafted," not "clinical."
-- Text hierarchy relies on color steps (Text → Subtext 1 → Subtext 0 → Overlay 2) rather than weight alone. This keeps visual density low even in data-heavy UIs.
-- Accent colors are **never** used as large background fills. They are ink on a dark canvas — badges, icons, underlines, syntax tokens.
+- Mocha's deep canvas (`--ctp-base` #1e1e2e) layers through Surface tiers that step up in lightness, not in hue. The system reads as monochromatic at a glance.
+- Mauve is the primary brand accent and the only color used for primary CTAs — Mocha Mauve (`#cba6f7`), Latte Mauve (`#8839ef`). All other accent colors serve semantic roles.
+- Border radius uses a soft scale (`--radius-md` 8px default). No fully-sharp rectangles; no fully-rounded pills on primary surfaces.
+- Text hierarchy relies on color steps (Text → Subtext 1 → Subtext 0 → Overlay 2) rather than weight alone.
+- Accent colors are **never** used as large background fills. They are ink on a canvas — badges, icons, underlines, syntax tokens.
+- Theme is controlled via `data-theme="dark"` / `data-theme="light"` on `<html>`. CSS variables flip; component code stays unchanged.
 
 ---
 
 ## Color Palette
 
-### Base Colors (Background Layers)
+### Mocha (Dark) — Base Colors
 
-| Name      | Hex       | RGB              | Usage                             |
-| --------- | --------- | ---------------- | --------------------------------- |
-| Crust     | `#181926` | rgb(24, 25, 38)  | Deepest background, app shell     |
-| Mantle    | `#1e2030` | rgb(30, 32, 48)  | Sidebar, panel backgrounds        |
-| Base      | `#24273a` | rgb(36, 39, 58)  | Primary content background        |
-| Surface 0 | `#363a4f` | rgb(54, 58, 79)  | Cards, input field backgrounds    |
-| Surface 1 | `#494d64` | rgb(73, 77, 100) | Hover states, selected items      |
-| Surface 2 | `#5b6078` | rgb(91, 96, 120) | Active tabs, highlighted surfaces |
+| Name      | Hex       | RGB               | Usage                             |
+| --------- | --------- | ----------------- | --------------------------------- |
+| Crust     | `#11111b` | rgb(17, 17, 27)   | Deepest background, app shell     |
+| Mantle    | `#181825` | rgb(24, 24, 37)   | Sidebar, panel backgrounds        |
+| Base      | `#1e1e2e` | rgb(30, 30, 46)   | Primary content background        |
+| Surface 0 | `#313244` | rgb(49, 50, 68)   | Cards, input field backgrounds    |
+| Surface 1 | `#45475a` | rgb(69, 71, 90)   | Hover states, selected items      |
+| Surface 2 | `#585b70` | rgb(88, 91, 112)  | Active tabs, highlighted surfaces |
 
-### Overlay Colors (Layers & Borders)
-
-| Name      | Hex       | RGB               | Usage                        |
-| --------- | --------- | ----------------- | ---------------------------- |
-| Overlay 0 | `#6e738d` | rgb(110, 115, 141)| Inactive icons, dividers     |
-| Overlay 1 | `#8087a2` | rgb(128, 135, 162)| Placeholders, subtle borders |
-| Overlay 2 | `#939ab7` | rgb(147, 154, 183)| Secondary button borders     |
-
-### Text Colors (Text Layers)
+### Mocha (Dark) — Overlay & Text
 
 | Name      | Hex       | RGB               | Usage                        |
 | --------- | --------- | ----------------- | ---------------------------- |
-| Subtext 0 | `#a5adcb` | rgb(165, 173, 203)| Captions, meta information   |
-| Subtext 1 | `#b8c0e0` | rgb(184, 192, 224)| Secondary text, descriptions |
-| Text      | `#cad3f5` | rgb(202, 211, 245)| Primary body text            |
+| Overlay 0 | `#6c7086` | rgb(108, 112, 134)| Inactive icons, dividers     |
+| Overlay 1 | `#7f849c` | rgb(127, 132, 156)| Placeholders, subtle borders |
+| Overlay 2 | `#9399b2` | rgb(147, 153, 178)| Secondary button borders     |
+| Subtext 0 | `#a6adc8` | rgb(166, 173, 200)| Captions, meta information   |
+| Subtext 1 | `#bac2de` | rgb(186, 194, 222)| Secondary text, descriptions |
+| Text      | `#cdd6f4` | rgb(205, 214, 244)| Primary body text            |
 
-### Accent Colors
+### Accent Colors (shared across themes — values differ per flavor)
 
-| Name      | Hex       | RGB               | HSL                | Usage                          |
-| --------- | --------- | ----------------- | ------------------ | ------------------------------ |
-| Rosewater | `#f4dbd6` | rgb(244, 219, 214)| hsl(10, 58%, 90%)  | Warm highlights, decorative    |
-| Flamingo  | `#f0c6c6` | rgb(240, 198, 198)| hsl(0, 58%, 86%)   | Soft emphasis, constants (syntax)|
-| Pink      | `#f5bde6` | rgb(245, 189, 230)| hsl(316, 74%, 85%) | Tags, decorative accents       |
-| Mauve     | `#c6a0f6` | rgb(198, 160, 246)| hsl(267, 83%, 80%) | **Primary brand accent, CTAs** |
-| Red       | `#ed8796` | rgb(237, 135, 150)| hsl(351, 74%, 73%) | Errors, destructive actions    |
-| Maroon    | `#ee99a0` | rgb(238, 153, 160)| hsl(355, 71%, 77%) | Warning badges                 |
-| Peach     | `#f5a97f` | rgb(245, 169, 127)| hsl(21, 86%, 73%)  | Notifications, numbers (syntax)|
-| Yellow    | `#eed49f` | rgb(238, 212, 159)| hsl(40, 70%, 78%)  | Warnings, types (syntax)       |
-| Green     | `#a6da95` | rgb(166, 218, 149)| hsl(105, 48%, 72%) | Success, strings (syntax)      |
-| Teal      | `#8bd5ca` | rgb(139, 213, 202)| hsl(171, 47%, 69%) | Info states, secondary links   |
-| Sky       | `#91d7e3` | rgb(145, 215, 227)| hsl(189, 59%, 73%) | New / fresh indicators         |
-| Sapphire  | `#7dc4e4` | rgb(125, 196, 228)| hsl(199, 66%, 69%) | Interactive elements           |
-| Blue      | `#8aadf4` | rgb(138, 173, 244)| hsl(220, 83%, 75%) | Links, functions (syntax)      |
-| Lavender  | `#b7bdf8` | rgb(183, 189, 248)| hsl(234, 82%, 85%) | Focus rings, selected states   |
+| Name      | Mocha Hex | Latte Hex | Usage                          |
+| --------- | --------- | --------- | ------------------------------ |
+| Rosewater | `#f5e0dc` | `#dc8a78` | Warm highlights, decorative    |
+| Flamingo  | `#f2cdcd` | `#dd7878` | Soft emphasis, constants       |
+| Pink      | `#f5c2e7` | `#ea76cb` | Tags, decorative accents       |
+| **Mauve** | `#cba6f7` | `#8839ef` | **Primary brand accent, CTAs** |
+| Red       | `#f38ba8` | `#d20f39` | Errors, destructive actions    |
+| Maroon    | `#eba0ac` | `#e64553` | Warning badges                 |
+| Peach     | `#fab387` | `#fe640b` | Notifications, numbers         |
+| Yellow    | `#f9e2af` | `#df8e1d` | Warnings, types                |
+| Green     | `#a6e3a1` | `#40a02b` | Success, strings               |
+| Teal      | `#94e2d5` | `#179299` | Info states, secondary links   |
+| Sky       | `#89dceb` | `#04a5e5` | New / fresh indicators         |
+| Sapphire  | `#74c7ec` | `#209fb5` | Interactive elements           |
+| Blue      | `#89b4fa` | `#1e66f5` | Links, functions               |
+| Lavender  | `#b4befe` | `#7287fd` | Focus rings, selected states   |
+
+### Latte (Light) — Base Colors
+
+| Name      | Hex       | RGB               | Usage                             |
+| --------- | --------- | ----------------- | --------------------------------- |
+| Base      | `#eff1f5` | rgb(239, 241, 245)| Primary content background        |
+| Mantle    | `#e6e9ef` | rgb(230, 233, 239)| Sidebar, panel backgrounds        |
+| Crust     | `#dce0e8` | rgb(220, 224, 232)| Deepest shadow / border base      |
+| Surface 0 | `#ccd0da` | rgb(204, 208, 218)| Cards, input field backgrounds    |
+| Surface 1 | `#bcc0cc` | rgb(188, 192, 204)| Hover states, selected items      |
+| Surface 2 | `#acb0be` | rgb(172, 176, 190)| Active tabs, highlighted surfaces |
+| Overlay 0 | `#9ca0b0` | rgb(156, 160, 176)| Inactive icons, dividers          |
+| Overlay 1 | `#8c8fa1` | rgb(140, 143, 161)| Placeholders, subtle borders      |
+| Overlay 2 | `#7c7f93` | rgb(124, 127, 147)| Secondary button borders          |
+| Subtext 0 | `#6c6f85` | rgb(108, 111, 133)| Captions, meta information        |
+| Subtext 1 | `#5c5f77` | rgb(92, 95, 119)  | Secondary text, descriptions      |
+| Text      | `#4c4f69` | rgb(76, 79, 105)  | Primary body text                 |
 
 ---
 
 ## CSS Variables
 
-Drop-in CSS custom properties ready for your project.
+Two sets of CSS custom properties — Mocha for dark (default), Latte for light.
 
 ```css
-:root {
-  /* ── Base ── */
-  --ctp-crust:     #181926;
-  --ctp-mantle:    #1e2030;
-  --ctp-base:      #24273a;
-  --ctp-surface-0: #363a4f;
-  --ctp-surface-1: #494d64;
-  --ctp-surface-2: #5b6078;
+/* ── Mocha: Dark default ── */
+:root,
+[data-theme="dark"] {
+  /* Base */
+  --ctp-crust:     #11111b;
+  --ctp-mantle:    #181825;
+  --ctp-base:      #1e1e2e;
+  --ctp-surface-0: #313244;
+  --ctp-surface-1: #45475a;
+  --ctp-surface-2: #585b70;
 
-  /* ── Overlay ── */
-  --ctp-overlay-0: #6e738d;
-  --ctp-overlay-1: #8087a2;
-  --ctp-overlay-2: #939ab7;
+  /* Overlay */
+  --ctp-overlay-0: #6c7086;
+  --ctp-overlay-1: #7f849c;
+  --ctp-overlay-2: #9399b2;
 
-  /* ── Text ── */
-  --ctp-subtext-0: #a5adcb;
-  --ctp-subtext-1: #b8c0e0;
-  --ctp-text:      #cad3f5;
+  /* Text */
+  --ctp-subtext-0: #a6adc8;
+  --ctp-subtext-1: #bac2de;
+  --ctp-text:      #cdd6f4;
 
-  /* ── Accent ── */
-  --ctp-rosewater: #f4dbd6;
-  --ctp-flamingo:  #f0c6c6;
-  --ctp-pink:      #f5bde6;
-  --ctp-mauve:     #c6a0f6;
-  --ctp-red:       #ed8796;
-  --ctp-maroon:    #ee99a0;
-  --ctp-peach:     #f5a97f;
-  --ctp-yellow:    #eed49f;
-  --ctp-green:     #a6da95;
-  --ctp-teal:      #8bd5ca;
-  --ctp-sky:       #91d7e3;
-  --ctp-sapphire:  #7dc4e4;
-  --ctp-blue:      #8aadf4;
-  --ctp-lavender:  #b7bdf8;
+  /* Accent */
+  --ctp-rosewater: #f5e0dc;
+  --ctp-flamingo:  #f2cdcd;
+  --ctp-pink:      #f5c2e7;
+  --ctp-mauve:     #cba6f7;
+  --ctp-red:       #f38ba8;
+  --ctp-maroon:    #eba0ac;
+  --ctp-peach:     #fab387;
+  --ctp-yellow:    #f9e2af;
+  --ctp-green:     #a6e3a1;
+  --ctp-teal:      #94e2d5;
+  --ctp-sky:       #89dceb;
+  --ctp-sapphire:  #74c7ec;
+  --ctp-blue:      #89b4fa;
+  --ctp-lavender:  #b4befe;
+}
+
+/* ── Latte: Light ── */
+[data-theme="light"] {
+  /* Base */
+  --ctp-crust:     #dce0e8;
+  --ctp-mantle:    #e6e9ef;
+  --ctp-base:      #eff1f5;
+  --ctp-surface-0: #ccd0da;
+  --ctp-surface-1: #bcc0cc;
+  --ctp-surface-2: #acb0be;
+
+  /* Overlay */
+  --ctp-overlay-0: #9ca0b0;
+  --ctp-overlay-1: #8c8fa1;
+  --ctp-overlay-2: #7c7f93;
+
+  /* Text */
+  --ctp-subtext-0: #6c6f85;
+  --ctp-subtext-1: #5c5f77;
+  --ctp-text:      #4c4f69;
+
+  /* Accent — Latte variants */
+  --ctp-rosewater: #dc8a78;
+  --ctp-flamingo:  #dd7878;
+  --ctp-pink:      #ea76cb;
+  --ctp-mauve:     #8839ef;
+  --ctp-red:       #d20f39;
+  --ctp-maroon:    #e64553;
+  --ctp-peach:     #fe640b;
+  --ctp-yellow:    #df8e1d;
+  --ctp-green:     #40a02b;
+  --ctp-teal:      #179299;
+  --ctp-sky:       #04a5e5;
+  --ctp-sapphire:  #209fb5;
+  --ctp-blue:      #1e66f5;
+  --ctp-lavender:  #7287fd;
 }
 ```
 
@@ -118,7 +171,7 @@ Drop-in CSS custom properties ready for your project.
 
 ## Semantic Token Mapping
 
-Maps palette colors to abstract roles. Always reference these tokens in component code — never inline hex values.
+Maps palette colors to abstract roles. Always reference these tokens in component code — never inline hex values. These tokens work unchanged across both themes.
 
 ```css
 :root {
@@ -156,7 +209,7 @@ Maps palette colors to abstract roles. Always reference these tokens in componen
 
 ## Typography
 
-A type stack tuned to Macchiato's calm, crafted character.
+A type stack tuned to Catppuccin's calm, crafted character — identical across both themes.
 
 ### Font Stack
 
@@ -168,7 +221,7 @@ A type stack tuned to Macchiato's calm, crafted character.
 }
 ```
 
-**Sora** pairs naturally with Macchiato's soft-but-precise feel — rounded terminals without being playful. **DM Sans** keeps body text legible at small sizes on dark surfaces. **JetBrains Mono** is the canonical pairing for Catppuccin syntax themes.
+**Sora** pairs naturally with Catppuccin's soft-but-precise feel — rounded terminals without being playful. **DM Sans** keeps body text legible at small sizes on both dark and light surfaces. **JetBrains Mono** is the canonical pairing for Catppuccin syntax themes.
 
 ### Scale
 
@@ -214,7 +267,7 @@ Display sizes (xl and above) use negative letter-spacing to compensate for Sora'
 }
 ```
 
-**Default radius is `--radius-md` (8px).** This is non-negotiable for the Macchiato character — sharp rectangles feel too industrial; pill shapes feel too playful. The 8px radius sits at the exact midpoint of the system's identity.
+**Default radius is `--radius-md` (8px).** This is non-negotiable for the Catppuccin character — sharp rectangles feel too industrial; pill shapes feel too playful. The 8px radius sits at the exact midpoint of the system's identity.
 
 ---
 
@@ -224,21 +277,23 @@ Elevation is expressed through background-color steps, not drop shadows. Shadows
 
 | Level         | Treatment                                              | Used By                                       |
 | ------------- | ------------------------------------------------------ | --------------------------------------------- |
-| Floor         | `--ctp-base` (#24273a), no border                      | Page background, empty state areas            |
-| Recessed      | `--ctp-mantle` (#1e2030), no border                    | Sidebars, sticky headers, footers             |
+| Floor         | `--ctp-base`, no border                                | Page background, empty state areas            |
+| Recessed      | `--ctp-mantle`, no border                              | Sidebars, sticky headers, footers             |
 | Flat card     | `--ctp-surface-0`, 1px `--ctp-surface-1` border        | Content cards, table rows, input fields       |
 | Raised card   | `--ctp-surface-0` + `--shadow-sm`                      | Hovered cards, selected list items            |
 | Floating      | `--ctp-surface-1` + `--shadow-md`                      | Dropdowns, tooltips, context menus            |
 | Overlay       | `--ctp-surface-0` + `--shadow-lg` + backdrop blur      | Modals, drawers, command palettes             |
 
 ```css
-/* Shadow tokens — Crust-based for natural dark harmony */
---shadow-xs: 0 1px 2px   rgba(24, 25, 38, 0.30);
---shadow-sm: 0 2px 8px   rgba(24, 25, 38, 0.40);
---shadow-md: 0 4px 16px  rgba(24, 25, 38, 0.50);
---shadow-lg: 0 8px 32px  rgba(24, 25, 38, 0.60);
---shadow-xl: 0 16px 48px rgba(24, 25, 38, 0.70);
+/* Shadow tokens — Crust-based for natural harmony (Mocha Crust = #11111b) */
+--shadow-xs: 0 1px 2px   rgba(17, 17, 27, 0.30);
+--shadow-sm: 0 2px 8px   rgba(17, 17, 27, 0.40);
+--shadow-md: 0 4px 16px  rgba(17, 17, 27, 0.50);
+--shadow-lg: 0 8px 32px  rgba(17, 17, 27, 0.60);
+--shadow-xl: 0 16px 48px rgba(17, 17, 27, 0.70);
 ```
+
+> **Light mode shadows:** In Latte, shadows use Latte Crust `rgba(220, 224, 232, 0.50)` at the same alpha steps to produce soft, warm-gray shadows on the light canvas.
 
 ---
 
@@ -332,6 +387,29 @@ hover:          background → --ctp-surface-1
 focus:          outline 2px solid --ctp-lavender, outline-offset 2px
 ```
 
+### `theme-toggle`
+
+Icon button in AppHeader that switches between dark (Mocha) and light (Latte).
+
+```
+background:     --ctp-surface-0
+color:          --ctp-subtext-1
+border:         1px solid --ctp-surface-1
+border-radius:  --radius-md
+width:          36px
+height:         36px
+
+icon (dark mode):  Moon icon (Lucide Moon, 16px)
+icon (light mode): Sun icon  (Lucide Sun, 16px)
+
+hover:          color → --ctp-mauve, background → --ctp-surface-1
+focus:          outline 2px solid --ctp-lavender, outline-offset 2px
+transition:     color 150ms ease-out, background 150ms ease-out
+
+aria-label:     "라이트 모드로 전환" / "다크 모드로 전환" (toggle current state)
+placement:      AppHeader right cluster, left of any user avatar
+```
+
 ### `text-input`
 
 Standard single-line text field.
@@ -382,30 +460,32 @@ padding:        --space-8    (32px)
 shadow:         --shadow-lg
 max-width:      560px
 
-backdrop:       background rgba(24, 25, 38, 0.75), backdrop-filter blur(4px)
+backdrop:       background rgba(var(--ctp-crust-rgb), 0.75), backdrop-filter blur(4px)
 enter:          scale(0.95) → scale(1), opacity 0 → 1, 200ms --ease-spring
 exit:           scale(1) → scale(0.96), opacity 1 → 0, 150ms ease-in
 ```
 
 ### `badge` / `tag`
 
-Small status and label indicators. Always use accent colors as **text/icon color on a tinted background** — never as solid fills.
+Small status and label indicators. Always use accent colors as **text/icon color on a tinted background** — never as solid fills. RGBA values below are for Mocha; in light mode the same CSS variable references work automatically.
 
-| Variant   | Background (10% alpha)  | Text / Border           |
-| --------- | ----------------------- | ----------------------- |
-| `default` | `--ctp-surface-1`       | `--ctp-subtext-1`       |
-| `mauve`   | `rgba(198,160,246,.15)` | `--ctp-mauve`           |
-| `blue`    | `rgba(138,173,244,.15)` | `--ctp-blue`            |
-| `green`   | `rgba(166,218,149,.15)` | `--ctp-green`           |
-| `yellow`  | `rgba(238,212,159,.15)` | `--ctp-yellow`          |
-| `red`     | `rgba(237,135,150,.15)` | `--ctp-red`             |
-| `peach`   | `rgba(245,169,127,.15)` | `--ctp-peach`           |
+| Variant   | Background (15% alpha — Mocha) | Text / Border           |
+| --------- | ------------------------------ | ----------------------- |
+| `default` | `--ctp-surface-1`              | `--ctp-subtext-1`       |
+| `mauve`   | `rgba(203, 166, 247, .15)`     | `--ctp-mauve`           |
+| `blue`    | `rgba(137, 180, 250, .15)`     | `--ctp-blue`            |
+| `green`   | `rgba(166, 227, 161, .15)`     | `--ctp-green`           |
+| `yellow`  | `rgba(249, 226, 175, .15)`     | `--ctp-yellow`          |
+| `red`     | `rgba(243, 139, 168, .15)`     | `--ctp-red`             |
+| `peach`   | `rgba(250, 179, 135, .15)`     | `--ctp-peach`           |
 
 ```
 border-radius:  --radius-full  (pill shape)
 padding:        2px 10px
 font:           --text-xs (11px / 500 / 0.4px tracking)
 ```
+
+> In light mode, tint alphas may need to increase to `.25` for sufficient contrast on the lighter background — verify visually.
 
 ### `tooltip`
 
@@ -426,7 +506,7 @@ exit:           opacity 1 → 0, 80ms ease-in
 
 ### `code-block`
 
-Multi-line code display. Syntax highlighting follows the Catppuccin Macchiato spec.
+Multi-line code display. Syntax highlighting follows Catppuccin Mocha spec.
 
 ```
 background:     --ctp-mantle
@@ -480,7 +560,7 @@ Hover:
 Global navigation bar pinned to the top of every page.
 
 ```
-background:     --ctp-mantle  (#1e2030)
+background:     --ctp-mantle
 border-bottom:  1px solid --ctp-surface-0
 height:         56px
 padding:        0 --space-6
@@ -489,7 +569,7 @@ Logo:           left-aligned, 20px / 700 / --ctp-mauve accent on brand mark
 Nav links:      --text-sm / 400, color --ctp-subtext-1
                 hover → --ctp-text
                 active → --ctp-text + 2px bottom border --ctp-mauve
-Right cluster:  icon buttons (search, settings, avatar) using button-icon spec
+Right cluster:  theme-toggle + icon buttons (search, settings, avatar)
 ```
 
 ### `sidebar`
@@ -518,6 +598,101 @@ Nav item:
   active:        background --ctp-surface-0, color --ctp-mauve,
                  left border 2px solid --ctp-mauve
 ```
+
+---
+
+## Theme Switching
+
+### Architecture
+
+Theme is set via `data-theme` attribute on `<html>`. CSS variables swap automatically — no component code changes needed.
+
+```
+dark  → [data-theme="dark"]  → Mocha palette
+light → [data-theme="light"] → Latte palette
+```
+
+### Recommended: `next-themes`
+
+For Next.js projects, use `next-themes` to avoid SSR hydration flicker:
+
+```bash
+npm install next-themes
+```
+
+```tsx
+// app/providers.tsx
+'use client';
+import { ThemeProvider } from 'next-themes';
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <ThemeProvider
+      attribute="data-theme"
+      defaultTheme="dark"
+      themes={['dark', 'light']}
+    >
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+```tsx
+// app/layout.tsx
+import { Providers } from './providers';
+
+export default function RootLayout({ children }) {
+  return (
+    <html suppressHydrationWarning>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  );
+}
+```
+
+```tsx
+// components/layout/ThemeToggle.tsx
+'use client';
+import { useTheme } from 'next-themes';
+import { Moon, Sun } from 'lucide-react';
+
+export default function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const isDark = theme === 'dark';
+
+  return (
+    <button
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      aria-label={isDark ? '라이트 모드로 전환' : '다크 모드로 전환'}
+      className="w-9 h-9 flex items-center justify-center rounded-[8px]
+                 bg-ctp-surface-0 border border-ctp-surface-1
+                 text-ctp-subtext-1 hover:text-ctp-mauve
+                 hover:bg-ctp-surface-1 transition-colors duration-150"
+    >
+      {isDark ? <Sun size={16} /> : <Moon size={16} />}
+    </button>
+  );
+}
+```
+
+### Theme Transition
+
+Theme switching is **instantaneous** — no crossfade. Animated transitions between themes cause visual glitching during SSR rehydration and are not recommended. If a transition is desired, limit it to `color` and `background-color` properties only:
+
+```css
+*, *::before, *::after {
+  transition: color 150ms ease-out, background-color 150ms ease-out;
+}
+```
+
+Do not apply this globally in production without testing — it slows every hover interaction.
+
+### localStorage Persistence
+
+`next-themes` handles `localStorage` persistence automatically. Key: `theme`. Default: `"dark"` (Mocha).
 
 ---
 
@@ -583,22 +758,30 @@ Base unit is **4px**. All spacing values are multiples.
 - **Color:** `currentColor` by default — inherits text color of parent
 - **Inactive:** `--ctp-overlay-0`
 - **Active / accented:** apply the relevant semantic color directly (e.g., `--ctp-green` for success icons)
-- **Stroke width:** 1.5px (Lucide default). Do not increase to 2px — it reads as heavy on Macchiato's soft surfaces.
+- **Stroke width:** 1.5px (Lucide default). Do not increase to 2px — it reads as heavy on the soft surfaces.
 
 ---
 
 ## Accessibility
 
-### Contrast Ratios
+### Contrast Ratios (Mocha dark)
 
 | Pair                                   | Ratio  | WCAG    |
 | -------------------------------------- | ------ | ------- |
-| `--ctp-text` on `--ctp-base`           | ~7.5:1 | AAA ✅  |
-| `--ctp-subtext-1` on `--ctp-base`      | ~5.2:1 | AA ✅   |
-| `--ctp-subtext-0` on `--ctp-base`      | ~4.1:1 | AA ✅   |
-| `--ctp-overlay-1` on `--ctp-base`      | ~3.0:1 | AA (large text only) ⚠️ |
-| `--ctp-mauve` on `--ctp-base`          | ~4.8:1 | AA ✅   |
-| `--ctp-crust` on `--ctp-mauve`         | ~7.2:1 | AAA ✅  |
+| `--ctp-text` on `--ctp-base`           | ~8.5:1 | AAA ✅  |
+| `--ctp-subtext-1` on `--ctp-base`      | ~5.8:1 | AA ✅   |
+| `--ctp-subtext-0` on `--ctp-base`      | ~4.5:1 | AA ✅   |
+| `--ctp-overlay-1` on `--ctp-base`      | ~3.2:1 | AA (large text only) ⚠️ |
+| `--ctp-mauve` on `--ctp-base`          | ~5.2:1 | AA ✅   |
+| `--ctp-crust` on `--ctp-mauve`         | ~8.0:1 | AAA ✅  |
+
+### Contrast Ratios (Latte light)
+
+| Pair                                   | Ratio  | WCAG    |
+| -------------------------------------- | ------ | ------- |
+| `--ctp-text` on `--ctp-base`           | ~7.0:1 | AAA ✅  |
+| `--ctp-subtext-1` on `--ctp-base`      | ~5.0:1 | AA ✅   |
+| `--ctp-mauve` on `--ctp-base`          | ~4.5:1 | AA ✅   |
 
 > Do not use `--ctp-overlay-0` or lower as body text — use it only for decorative icons and dividers.
 
@@ -606,7 +789,7 @@ Base unit is **4px**. All spacing values are multiples.
 
 - All interactive elements have a visible focus ring: `outline: 2px solid var(--ctp-lavender); outline-offset: 2px`
 - Never suppress `:focus-visible` without a custom focus indicator replacement
-- Focus ring color `--ctp-lavender` (#b7bdf8) achieves ≥ 3:1 contrast against `--ctp-base` on its own
+- Lavender (`#b4befe` Mocha / `#7287fd` Latte) achieves ≥ 3:1 contrast in both themes
 
 ### Status & Error States
 
@@ -646,6 +829,7 @@ Base unit is **4px**. All spacing values are multiples.
 - `button-primary`, `button-secondary`, `button-ghost` render at 40px height with 10px vertical padding — effective tap area 44px with surrounding spacing
 - `button-icon` is 36px; wrap with a 44px invisible tap zone via padding when used in isolation on mobile
 - `text-input` height is 40px — increase to 48px on mobile breakpoints
+- `theme-toggle` (36px) follows the same `button-icon` rule
 
 ### Collapsing Strategy
 
@@ -667,7 +851,8 @@ Base unit is **4px**. All spacing values are multiples.
 - Use the text color steps (Text → Subtext 1 → Subtext 0) to create visual hierarchy before reaching for weight changes.
 - Always pair status color (red, green, yellow) with a text label or icon — never color-only.
 - Use `currentColor` for icons so they automatically inherit parent text state.
-- Letter-space `--text-xs` badge labels at `0.4px` — small uppercase text needs tracking to breathe on dark surfaces.
+- Letter-space `--text-xs` badge labels at `0.4px` — small uppercase text needs tracking to breathe.
+- Reference CSS variables (`--ctp-*`) in component code — theme switching works automatically.
 
 ### Don't
 
@@ -675,10 +860,11 @@ Base unit is **4px**. All spacing values are multiples.
 - **Don't introduce a new accent color.** The 14-accent palette is complete. Map any new semantic need to an existing color (`--ctp-sky` for "new", `--ctp-teal` for "info", etc.).
 - **Don't place `--ctp-overlay-1` or lower as body text.** It fails AA contrast for normal-size text. Overlays are for icons and decorative dividers only.
 - **Don't use `--radius-full` on buttons.** Pill buttons break the system's "crafted, not playful" character. Buttons are always `--radius-md`.
-- **Don't stack two Surface 0 cards directly against each other without a border or gap.** Surfaces bleed into each other — use `1px solid --ctp-surface-1` borders or `--space-4` gaps between adjacent cards.
-- **Don't bold body text for emphasis.** Use `--ctp-text` vs `--ctp-subtext-1` color contrast instead. Bold body reads as aggressive on Macchiato's quiet surfaces.
+- **Don't stack two Surface 0 cards directly against each other without a border or gap.** Use `1px solid --ctp-surface-1` borders or `--space-4` gaps between adjacent cards.
+- **Don't bold body text for emphasis.** Use `--ctp-text` vs `--ctp-subtext-1` color contrast instead.
 - **Don't suppress focus rings.** Lavender focus rings are always visible — they're a deliberate part of the system's accessibility contract.
 - **Don't use drop shadows on flat cards.** Shadows are reserved for floating elements (dropdowns, modals, tooltips). Flat cards use border + background elevation only.
+- **Don't hardcode Mocha hex values.** Always use CSS variables so both themes work correctly.
 
 ---
 
@@ -686,49 +872,24 @@ Base unit is **4px**. All spacing values are multiples.
 
 1. **One component at a time.** Reference its key name (e.g., `button-primary`, `card`, `modal`) from the Components section.
 2. **New components default to `--radius-md` (8px).** Only use `--radius-full` if the component is explicitly circular (avatar, icon button). Only use `--radius-lg`/`--radius-xl` for large overlay containers.
-3. **Variants live as separate entries.** `-hover`, `-active`, `-disabled`, `-error` are documented states, not modifier classes. Document default and active/pressed only; derive disabled via opacity.
+3. **Variants live as separate entries.** `-hover`, `-active`, `-disabled`, `-error` are documented states, not modifier classes.
 4. **Use semantic tokens everywhere** — never inline hex values. If a semantic token doesn't exist for the use case, add it to the Semantic Token Mapping section first.
 5. **Accent colors for new components** — check existing semantic token mapping before assigning a new accent. If `--color-info` already maps to Teal, use `--color-info`, not `--ctp-teal` directly.
 6. **Typography contrast rule** — if two adjacent text elements look too similar, step one color down (Text → Subtext 1) before increasing font size or weight.
 7. **When adding a new status color**, use the badge alpha-tint pattern (`rgba` at 15% opacity) — never a solid accent background.
-
----
-
-## Dark Mode Note
-
-Macchiato is a **dark-only** palette. For light mode, pair with **Catppuccin Latte** — the system's canonical light counterpart. Override variables in a `prefers-color-scheme: light` block; the semantic token layer means only CSS variable values need to change, not component code.
-
-```css
-@media (prefers-color-scheme: light) {
-  :root {
-    /* Latte base */
-    --ctp-crust:     #dce0e8;
-    --ctp-mantle:    #e6e9ef;
-    --ctp-base:      #eff1f5;
-    --ctp-surface-0: #ccd0da;
-    --ctp-surface-1: #bcc0cc;
-    --ctp-surface-2: #acb0be;
-    --ctp-overlay-0: #9ca0b0;
-    --ctp-overlay-1: #8c8fa1;
-    --ctp-overlay-2: #7c7f93;
-    --ctp-subtext-0: #6c6f85;
-    --ctp-subtext-1: #5c5f77;
-    --ctp-text:      #4c4f69;
-    /* Accent colors remain the same across flavors */
-  }
-}
-```
+8. **Test both themes** — after adding a new component, toggle to Latte and verify contrast and readability before considering it done.
 
 ---
 
 ## Known Gaps
 
 - **Animation timings for specific components** (carousel slide transitions, skeleton loader pulses, notification toast stacks) are not yet specified — treat as `--duration-normal` with `--ease-out` until defined.
-- **Data visualization / chart color order** is not documented. A recommended sequence for charts would be: Mauve → Blue → Green → Peach → Teal → Yellow → Flamingo → Sky. This is unconfirmed against real chart implementations.
+- **Data visualization / chart color order** is not documented. A recommended sequence for charts: Mauve → Blue → Green → Peach → Teal → Yellow → Flamingo → Sky. Verify against real chart implementations in both themes.
 - **Form validation micro-states** (inline validation as-you-type vs on-blur vs on-submit) are not specified — error state appearance is documented but trigger timing is not.
 - **Configurator / picker surfaces** (color swatches, option grids, comparison panels) are not covered in this version.
-- **Dark/light transition animation** (when `prefers-color-scheme` changes at OS level) is not scoped — instantaneous swap is the safe default.
+- **Badge alpha-tint in Latte** — 15% alpha tints may render too faint on the light canvas. Bump to 25% as needed and document per-badge.
 - **Right-to-left (RTL) layout** behavior is not documented. All spacing and directional patterns assume LTR.
+- **System preference fallback** — if `next-themes` is not used, add `@media (prefers-color-scheme: light)` as a fallback that applies the same Latte variable overrides.
 
 ---
 
@@ -737,8 +898,9 @@ Macchiato is a **dark-only** palette. For light mode, pair with **Catppuccin Lat
 - [Catppuccin Palette](https://catppuccin.com/palette)
 - [Catppuccin Style Guide](https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md)
 - [catppuccin/palette (npm / tooling)](https://github.com/catppuccin/palette)
-- [Catppuccin for VSCode](https://github.com/catppuccin/vscode)
+- [next-themes](https://github.com/pacocoursey/next-themes)
+- [Lucide Icons](https://lucide.dev)
 
 ---
 
-*DESIGN.md · Catppuccin Macchiato · 2026*
+*DESIGN.md · Catppuccin Mocha (dark) + Latte (light) · 2026*
